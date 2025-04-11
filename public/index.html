@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>TextAI</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    textarea, button { width: 100%; margin-top: 1rem; }
+    #resultado { margin-top: 2rem; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h1>TextAI - Gerador de Texto com IA</h1>
+  <textarea id="prompt" rows="4" placeholder="Digite um prompt..."></textarea>
+  <button onclick="gerarTexto()">Gerar Texto</button>
+  <div id="resultado"></div>
+
+  <script>
+    async function gerarTexto() {
+      const prompt = document.getElementById('prompt').value;
+      const response = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await response.json();
+      document.getElementById('resultado').innerText = data.result.trim();
+    }
+  </script>
+</body>
+</html>
